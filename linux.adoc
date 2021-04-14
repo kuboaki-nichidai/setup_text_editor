@@ -1,0 +1,359 @@
+:linkcss:
+:stylesdir: css
+:stylesheet: mystyle.css
+:twoinches: width='360'
+:full-width: width='100%'
+:three-quarters-width: width='75%'
+:two-thirds-width: width='66%'
+:half-width: width='50%'
+:half-size:
+:one-thirds-width: width='33%'
+:one-quarters-width: width='25%'
+:thumbnail: width='60'
+:imagesdir: images
+:sourcesdir: codes
+:icons: font
+:hide-uri-scheme!:
+:figure-caption: 図
+:example-caption: リスト
+:table-caption: 表
+:appendix-caption: 付録
+:xrefstyle: short
+:section-refsig:
+:chapter-refsig:
+
+NOTE: 下記文章中では、ワークスペースとして `Users\kuboaki\rubybok` といった場所を指定していますが、これは、みなさんがCloneしたリポジトリのディレクトリ名で読み替えてください。
+
+
+[[check_ruby_installed_on_linux]]
+== 自分の PC の環境を確認する（Linux）
+
+Linuxには、多数のディストリビューションがあります。
+これらのすべての環境について説明するわけにもいかないので、ここでは Ubuntu 20.04 を使って説明します。
+
+=== ターミナルを開く
+
+ターミナルを開きます（ <<terminal_prompt_01>> ）。
+ターミナルを開くには、画面左下の「 Show Application 」アイコ（ <<terminal_prompt_02>> ）ンをクリックして、表示されるアプリケーションから「 Terminal 」を選びます（ <<terminal_prompt_03>> ）。
+または、デスクトップでマウスの右クリックでポップアップメニューを開いて「Terminal」を選びます（ <<terminal_prompt_04>> ）。
+
+
+[[terminal_prompt_02]]
+.「 Show Application 」アイコンからアプリケーションリストを開く
+image::Screenshot2021-02-10_01-29-43_marked.png[{half-width}]
+
+// オリジナルは Screenshot2021-02-10_01-29-43.png
+// トリミングして、枠線をいれて、Screenshot2021-02-10_01-29-43_marked.png のようにします。
+
+[[terminal_prompt_03]]
+.アプリケーションリストから「Terminal」を開く
+image::Screenshot2021-02-10_01-29-58_makred.png[{full-width}]
+
+// オリジナルは Screenshot2021-02-10_01-29-58.png
+// トリミングして、枠線をいれて、Screenshot2021-02-10_01-29-58_makred.png のようにします。
+
+[[terminal_prompt_04]]
+.デスクトップのポップアップメニューからターミナルを開く
+image::Screenshot2021-02-10_01-30-34_marked.png[{half-width}]
+
+
+// オリジナルは Screenshot2021-02-10_01-30-34.png
+// トリミングして、枠線をいれて、Screenshot2021-02-10_01-30-34_marked.png のようにします。
+
+
+[[terminal_prompt_01]]
+.ターミナルのウィンドウ
+image::Screenshot2021-02-10_06-34-13_marked.png[{half-width}]
+
+// オリジナルは Screenshot2021-02-10_06-34-13.png
+// 外側の余白とウィンドウの不要部分をトリミングして
+// Screenshot2021-02-10_06-34-13_marked.pngのようにしてください。
+
+ウィンドウに表示されている「 `~` （チルダ）」は、現在のディレクトリがホームディレクトリであることを示しています。
+ウィンドウの色やフォントは、みなさんのターミナルの設定で異なっているでしょう。
+また、表示されるプロンプトは、みなさんが使っているシェルの設定によって異なる場合があります。
+
+
+=== Rubyを起動してみる
+
+Ruby が使える状態か判断するために、いちど Ruby を起動してみましょう。
+
+ターミナルから、 <<start_ruby_linux_01>> のように、Rubyコマンドにバージョン番号表示のオプションを指定して起動します。
+言語の名前は「Ruby」ですが、プログラムの名前は小文字で `ruby` と入力します。その後ろに空白を入れて、 `--` （ハイフンを2つ）に続けて `version` と入力します。
+
+[[start_ruby_linux_01]]
+.【端末】Rubyを起動する
+[example]
+--
+[source,console]
+----
+$ ruby --version <1>
+ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-linux-gnu]
+----
+<1> Rubyを `--version` オプションをつけて起動して、バージョン番号を表示した。
+--
+
+この表示をみると、バージョンが `2.7.0p0` のRubyがインストールされているのがわかります。
+
+もし、 <<start_ruby_linux_02>> のような表示になった場合には、Rubyがインストールできていません。
+
+
+[[start_ruby_linux_02]]
+.【端末】Rubyが起動できなかったとき
+[example]
+--
+[source,console]
+----
+$ ruby --version
+
+kuboaki@elwood ~ $ ruby --version
+
+Command 'ruby' not found, but can be installed with:
+
+sudo apt install ruby <1>
+----
+<1> `sudo` は、スーパーユーザー（ root ）権限が必要なときに使うコマンド。
+--
+
+Rubyの動作が確認できた人は「 <<make_simple_script_and_check>> 」へ進みましょう。
+インストールできていない場合には「 <<install_ruby_on_win>> 」へ進みましょう。
+
+また、インストールされていても、バージョンが古すぎると、この本の演習が期待通り動作しないことがあります。
+確認したバージョンが 2.4 あるいはそれ以前の場合は、この機会に新しいバージョンをインストールしましょう。
+
+
+
+[[install_ruby_on_linux]]
+== 自分の PC に Ruby を追加する（Linux）
+
+
+Rubyがインストールされていないときは、パッケージマネージャを使ってインストールしましょう。
+
+
+=== Rubyパッケージを追加する方法
+
+
+Ubuntuの場合は、パッケージマネージ用コマンド `apt` を使ってインストールします（ <<install_ruby_linux_01>> ）。
+
+[[install_ruby_linux_01]]
+.【端末】aptでRubyをインストールする
+[example]
+--
+[source,console]
+----
+$ sudo apt install ruby # <1>
+[sudo] password for kuboaki:  # <2>
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  fonts-lato javascript-common libjs-jquery libruby2.5 libssl1.1 rake
+（略）
+Setting up libruby2.5:amd64 (2.5.1-1ubuntu1.7) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.2) ...
+----
+<1> `sudo` で管理者権限を使ってインストールする。ログインユーザーのパスワードを入力する。
+<2> 管理者権限を使おうとしている人（自分）のパスワードを入力する。
+--
+
+[[rbenv_02]]
+=== rbenvを使って追加する方法
+
+Rubyの複数のバージョンを、プロジェクトや作業用のディレクトリごとに切り替えて使いたいときは、 ((rbenv )) footnote:[`https://github.com/rbenv/rbenv`] を使います。
+
+まず、 `rbenv` をインストールします（ <<rbenv_install_ruby_11>> ）。
+
+
+[[rbenv_install_ruby_11]]
+.【端末】aptを使って `rbenv` をインストールする
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ sudo apt install rbenv # <1>
+[sudo] password for kuboaki: # <2>
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+（略）
+Do you want to continue? [Y/n] # <3>
+（略）
+----
+<1> `apt` コマンドは、インストールしたい複数のパッケージを列挙すれば、まとめてインストールできる。
+<2> 管理者権限を使おうとしている人（自分）のパスワードを入力する。
+<3> `Y` を入力する。
+--
+
+次に、rbenv を使うための初期処理を、ターミナルを起動するとき読み込まれるシェルスクリプトに追加します。
+ターミナルで使っているシェルは変更可能ですが、ここでは `bash` の場合について説明します。
+編集にはテキストエディターを使います。
+
+bashの場合は、 `~/.bashrc` に初期処理を追記します（ <<rbenv_install_ruby_12>> ）。
+
+[[rbenv_install_ruby_12]]
+.【BASH】 `~/.bashrc` の末尾に追記する
+[example]
+--
+[source,shell]
+----
+PATH="$HOME/.rbenv/bin:$PATH"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+----
+--
+
+編集が済んだらターミナルを開き直します。 footnote:[ わかる人は source コマンドを使ってもかまいません。]
+
+もし、まだGitをインストールしていない場合には、インストールしてから実行します（ <<rbenv_install_ruby_13>> ）。
+
+[[rbenv_install_ruby_13]]
+.【端末】 Gitをインストールする（まだインストールしていない場合）
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ sudo apt install git
+[sudo] password for kuboaki: 
+Reading package lists... Done
+（略）
+----
+--
+
+Gitを使い始めるときにはいくつか設定が必要ですが、最低限次の項目を設定しておきましょう（ <<git_init_01>> ）。
+
+[[git_init_01]]
+.【端末】 Gitに登録しているユーザー名とメールアドレスを設定する
+[example]
+--
+[source,console]
+----
+$ git config --global user.name kuboaki # <1>
+$ git config --global user.email kuboaki@gmail.com # <2>
+----
+<1> Gitに登録しているユーザー名を設定した。
+<2> Gitに登録しているメールアドレスを設定した。
+--
+
+次に、 `ruby-build` をインストールします（ <<rbenv_install_ruby_14>> ）。
+これで、 `rbenv` がビルドに使えるRubyのバージョンリストが最新になります。
+
+[[rbenv_install_ruby_14]]
+.【端末】aptを使って `ruby-build` をインストールする
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+----
+--
+
+利用可能な Rubyバージョンの一覧を表示してみましょう（ <<rbenv_install_ruby_15>> ）。
+
+[[rbenv_install_ruby_15]]
+.【端末】 利用可能なRubyバージョンの一覧を調べる
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ rbenv install --list
+Available versions:
+  1.8.5-p52
+  1.8.5-p113
+（略）
+  2.7.1
+  2.7.2
+（略）
+  3.0.0
+（略）
+----
+--
+
+ここから使いたいバージョンを選びます。
+この本の演習では、2.5 以降であれば使えます。
+調べた中から、比較的新しいバージョンを使うようにしましょう。
+
+ここでは、 `2.7.1` をインストールしてみます（ <<rbenv_install_ruby_16>> ）。
+少し時間がかかりますが、待ちましょう。
+
+[[rbenv_install_ruby_16]]
+.【端末】  `2.7.2` をインストールする
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ rbenv install 2.7.1
+Downloading ruby-2.7.1.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.1.tar.bz2
+Installing ruby-2.7.1...
+
+（インストールが終わるまで待つ）
+
+Installed ruby-2.7.1 to /Users/kuboaki/.rbenv/versions/2.7.2
+----
+--
+
+インストールが終わったら、演習用に作成したディレクトリ（演習用のワークスペースと呼ぶことにしましたね）へ移動します（ <<cd_work_dir_11>>  ）。
+
+[IMPORTANT]
+--
+rbenvを使うと、利用するディレクトリに応じて Rubyのバージョンを選択できるようになります。
+rbenv を使ったRubyを使うときは、自分が使いたいディレクトリへ移動して、使用するバージョンを設定しましょう。
+--
+
+[[cd_work_dir_11]]
+.【端末】演習用ワークスペースへ移動する
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ mkdir rubybook # <1>
+kuboaki@elwood ~ $ cd rubybook # <2>
+kuboaki@elwood ~/rubybook $ # <3>
+----
+<1> もしワークスペース用ディレクトリを作っていなかったら、作成する。
+<2> 作成したワークスペース用ディレクトリへ移動した。
+<3> この `rubybok` はプロンプト（入力促進記号）として表示しているディレクトリ名。
+--
+
+ワークスペースで使うRubyを `2.7.1` に設定します。
+リスト中、行頭の `rubybook` はプロンプトとして表示している現在のディレクトリ名なのに注意してください（ <<rbenv_install_ruby_17>> ）。
+
+[[rbenv_install_ruby_17]]
+.【端末】ワークスペースのRubyを  `2.7.1` に設定する
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~/rubybook $ rbenv local 2.7.1 # <1>
+kuboaki@elwood ~/rubybook $ rbenv versions # <2>
+  system
+* 2.7.1 (set by /home/kuboaki/rubybook/.ruby-version) # <3>
+----
+<1> `local` コマンドで、現在のディレクトリで使うRubyのバージョンを設定している。
+<2> `versions` コマンドで rbenvでインストールしたRubyのバージョンを表示した。
+<3> `*` がついているのが、現在のディレクトリが設定しているRubyのバージョン。
+--
+
+
+== インストールできたか確認する
+
+Rubyを起動してみましょう（ <<start_ruby_linux_04>>  ）。
+
+[[start_ruby_linux_04]]
+.【端末】Rubyを起動する（ワークスペース）
+[example]
+--
+[source,console]
+----
+kuboaki@elwood ~ $ cd rubybook
+kuboaki@elwood ~/rubybook $ ruby --version
+ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x86_64-linux]
+----
+--
+
+この表示では、ワークスペースでは、バージョンが `2.7.1p83` のRubyが使われるていることがわかります。
+
+
+これで、Rubyが使えるようになりました。
+「 <<make_simple_script_and_check>> 」へ進みましょう
+問題が見つかった場合には、これまでの手順を見直してみましょう。
+

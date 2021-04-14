@@ -1,0 +1,203 @@
+:linkcss:
+:stylesdir: css
+:stylesheet: mystyle.css
+:twoinches: width='360'
+:full-width: width='100%'
+:three-quarters-width: width='75%'
+:two-thirds-width: width='66%'
+:half-width: width='50%'
+:half-size:
+:one-thirds-width: width='33%'
+:one-quarters-width: width='25%'
+:thumbnail: width='60'
+:imagesdir: images
+:sourcesdir: codes
+:icons: font
+:hide-uri-scheme!:
+:figure-caption: 図
+:example-caption: リスト
+:table-caption: 表
+:appendix-caption: 付録
+:xrefstyle: short
+:section-refsig:
+:chapter-refsig:
+
+= Rubyをインストールする（Windows）
+
+
+== Rubyが使えるかどうか調べる
+
+Ruby が使える状態か判断するために、一度Rubyを起動してみましょう。
+
+コマンドプロンプトを開いて、 <<start_ruby_win_01>> のように、Rubyコマンドにバージョン番号表示のオプションを指定して起動します。
+言語の名前は「Ruby」ですが、プログラムの名前は小文字で `ruby` と入力します。その後ろに空白を入れて、 `--` (ハイフンを2つ）に続けて `version` と入力します。
+
+[[start_ruby_win_01]]
+.【端末】Rubyを起動する
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki>ruby --version # <1>
+ruby 2.6.4p104 (2019-08-28 revision 67798) [x64-mingw32]
+----
+<1>  Rubyを `--version` オプションをつけて起動して、バージョン番号を表示した。
+--
+
+この表示をみると、バージョンが `2.6.4.p104` のRubyがインストールされているのがわかります。
+
+もし、 <<start_ruby_win_02>> のような表示になった場合には、Rubyがインストールできていないか、起動できない状態になっています。
+
+[[start_ruby_win_02]]
+.【端末】Rubyが起動できなかったとき
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki>ruby --version
+'ruby' は、内部コマンドまたは外部コマンド、
+操作可能なプログラムまたはバッチ ファイルとして認識されていません。
+----
+--
+
+Rubyの動作が確認できた人は「 <<make_simple_script_and_check>> 」へ進みましょう。
+インストールできていない場合には「 <<install_ruby_on_win>> 」へ進みましょう。
+
+また、インストールされていても、バージョンが古すぎるとこの本の演習を期待通り実行できないことがあります。
+確認したバージョンが 2.4 あるいはそれ以前の場合は、この機会に新しいバージョンをインストールしましょう。
+
+[[install_ruby_on_win]]
+== 自分の PC に Ruby を追加する（Windows）
+
+Windows には、Ruby は予めインストールされていません。別途、自分でインストールします。
+みなさんがこの本の演習に使おうと思っている PC が、 Ruby を使えるようになっているかどうか確かめましょう。
+もし、Rubyを使えることが確認できれば、インストール手順を省いてそのまま使ってもよいでしょう。
+
+
+もし、Rubyが使える状況になっていたら、この節は読み飛ばしても構いません。
+まだ Ruby をインストールしていない方は、ここで Ruby をインストールしましょう。
+
+
+=== Ruby を入手する
+
+RubyInstallerのダウンロードページから。インストーラーをダウンロードします（ <<ruby_installer_download_page>>  ）。
+
+RubyInstallerのダウンロードページ:: `https://rubyinstaller.org/downloads/`
+
+[[ruby_installer_download_page]]
+.RubyInstallerをダウンロードする
+image::210207-0002_marked.jpg[{half-width}]
+
+=== Ruby をインストールする
+
+ダウンロードしたインストーラーをエクスプローラーで探します（ <<ruby_installer_exe_file>> ）。
+
+[[ruby_installer_exe_file]]
+.ダウンロードしたRubyInstallerの実行ファイル
+image::GSW-20190910-161321_marked.png[ruby_installer_exe_file, {half-width}]
+
+見つけたら、ダブルクリックして起動します。
+
+すると、ライセンス合意のダイアログが開きます（ <<license_agreement_dialog>>  ）。
+
+[[license_agreement_dialog]]
+.ライセンス合意のダイアログ
+image::GSW-20190910-170454_mared.png[license_agreement_dialog, {half-width}]
+
+`I accept the License.` をチェックして「Next」ボタンをクリックします。
+
+すると、インストール先を指定するダイアログが開きます（ <<install_destination_dialog>> ）。
+インストールするディレクトリの初期値が入っているはずです。そのままでよいでしょう。
+そして、3つあるチェックボックスをチェックします。
+
+[[install_destination_dialog]]
+.インストール先指定のダイアログ
+image::GSW-20190910-170553_marked.png[install_destination_dialog, {half-width}]
+
+「Install」ボタンをクリックすると、追加コンポーネントを選択するダイアログが開きます（ <<additional_component_dialog>> ）。
+`MSYS2 development toolchain` をチェックします。
+
+
+[[additional_component_dialog]]
+.追加コンポーネント選択のダイアログ
+image::GSW-20190910-170610_marked.png[additional_component_dialog, {half-width}]
+
+「Next」ボタンをクリックします。
+
+[IMPORTENT]
+--
+`MAYS2` は、今後使うライブラリのインストールで必要になりますので、必ずインストールしておきましょう。
+--
+
+インストールが終わるまで、しばらく待ちます。
+
+[[installation_progress_dialog]]
+.インストール中のダイアログ
+image::GSW-20190910-170639.png[installation_progress_dialog,  {half-width}]
+
+途中で、MSYS2のインストールウィザードが起動します（ <<install_msys2_dialog>> ）。
+
+[[install_msys2_dialog]]
+.MSYS2のインストールウィザードが起動した
+image::GSW-20190910-171020.png[installation_complete_dialog,  {half-width}]
+
+コマンドプロンプトが開いて、MSYS2のインストーラが起動します（ <<development_toolchain_installation_start>> ）。
+
+[[development_toolchain_installation_start]]
+.開発用ツールチェーンのインストール開始画面
+image::GSW-20190910-171214.png[development_toolchain_installation_start,  {half-width}]
+
+「 `3` 」を入力し、エンターキーを押します。
+
+パッケージの取得とインストールが始まります（ <<development_toolchain_installation_finish>> ）。
+再び番号の選択街になれば、インストールは完了です。
+
+[[development_toolchain_installation_finish]]
+.開発用ツールチェーンのインストール完了画面
+image::GSW-20190910-171347.png[development_toolchain_installation_finish,  {half-width}]
+
+インストールしたRubyの入っているディレクトリ（フォルダ）を確認しておきましょう。
+
+[[ruby_location_check]]
+.Rubvのインストール先ディレクトリのチェック
+image::GSW-20190910-171458.png[ruby_location_check,  {half-width}]
+
+=== インストールできたか確認する
+
+Ruby を起動してみましょう。
+
+コマンドプロンプトを開きます。 <<start_ruby_win_03>> のように、Rubyコマンドにバージョン番号表示のオプションを指定して起動します。
+プログラム名の場合は小文字で `ruby` と入力します。その後ろに空白を入れて、 `--` (ハイフン2つ）に続けて `version` と入力します。
+
+[[start_ruby_win_03]]
+.【端末】Rubyを起動する
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki>ruby --version
+ruby 2.6.4p104 (2019-08-28 revision 67798) [x64-mingw32]
+----
+--
+
+
+この表示では、Rubyのバージョンが `2.6.4.p104` のRubyが動作していることが確認できています。
+
+もし <<start_ruby_win_04>> のような表示になった場合には、Rubyのインストールで問題が起きているか、起動できない状態になっています。
+
+[[start_ruby_win_04]]
+.【端末】Rubyが起動できなかったとき
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki>ruby --version
+'ruby' は、内部コマンドまたは外部コマンド、
+操作可能なプログラムまたはバッチ ファイルとして認識されていません。
+----
+--
+
+この場合は、インストールのどこかに問題があった可能性があります。
+インストールした手順を見直してみましょう。
+
+

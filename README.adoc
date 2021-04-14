@@ -1,0 +1,219 @@
+:linkcss:
+:stylesdir: css
+:stylesheet: mystyle.css
+:twoinches: width='360'
+:full-width: width='100%'
+:three-quarters-width: width='75%'
+:two-thirds-width: width='66%'
+:half-width: width='50%'
+:half-size:
+:one-thirds-width: width='33%'
+:one-quarters-width: width='25%'
+:thumbnail: width='60'
+:imagesdir: images
+:sourcesdir: codes
+:icons: font
+:hide-uri-scheme!:
+:figure-caption: 図
+:example-caption: リスト
+:table-caption: 表
+:appendix-caption: 付録
+:xrefstyle: short
+:section-refsig:
+:chapter-refsig:
+
+NOTE: 下記文章中では、ワークスペースとして `Users\kuboaki\rubybok` といった場所を指定していますが、これは、みなさんがCloneしたリポジトリのディレクトリ名で読み替えてください。
+
+= Rubyをインストールする
+
+== 自分の環境にRubyをインストールする
+
+* link:windoww.adoc[Windows]
+* link:macos.adoc[macOS]
+* link:linux.adoc[Linux(Ubuntu)]
+
+[[make_simple_script_and_check]]
+== 簡単なスクリプトの作成と実行
+
+Rubyのインストールが済み、演習に使うワークスペースも準備できましたので、簡単なプログラムを作成して動作を確認しましょう。
+
+=== テキストエディターでRubyのプログラムを書く
+
+まず <<first_time_writing_op>> に従って簡単なプログラムを作成しましょう。
+
+[[first_time_writing_op]]
+.プログラムを書く手順
+[example]
+--
+. みなさんが用意したテキストエディターを起動します。
+. 新規ファイルを作成します。ファイル名を `test01.rb` としましょう。
+.  <<test01.rb>> のように入力してみましょう。 各行の左端の数字は行番号です（入力しません）。 +
+入力するプログラムの一部ではありませんので中止しましょう。また、 `#` から始まる行はコメントです。面倒なら今回は省略してもかまいません。
+. 入力できたら、ワークスペース（わたしの場合 `C:\Users\kuboaki\rubybook` ）に保存します。
+--
+
+[[hello.rb]]
+.【Ruby】 `hello.rb`
+[example]
+--
+[source,ruby,linenums]
+----
+# Rubyが動作するかテストする
+puts 'Hello World'        # <1>
+puts __FILE__             # <2>
+puts 'これが日本語の表示' # <3>
+----
+<1> 文字列 `Hello World`  を表示する。
+<2> `+__FILE__+`  という予約語は、実行するときに、このファイルの名前（ `hello.rb` ）に置き換えられる。
+<3> 日本語の文字列を表示する。
+--
+
+最初なので、細かい注意も書いておきます。
+1行目のように行のどこか（行頭でなくてもかまいません）に `#` が見つかると、そこから行末までがコメントとして扱われます。コメントは、プログラムの動作に影響を与えません。ところどころにある行末の数字を書いたコメントは、あとに続く説明の番号に対応づけるためのものです。これも入力しなくてかまいません。 +
+
+2行目の `puts` は、後ろに続く引数を文字列にして出力します。ここでは、引数は `'Hello World'` という文字列です。 Rubyでは、 `'` や `"` で囲まれた文字の並びは「文字列」なので、ここはそのまま `Hello World` が出力されます。 `puts` と引数の間を空白で区切るのを忘れないようにしましょう。 +
+
+3行目も文字列を出力しますが、引数が `__FILE__` となっています。入力するには、 `FILE` の前に `_` （アンダースコア）2つ、後にも2つ書きます。Rubyが、実行中のファイル名を表すために用意した特別な名前です。 +
+4行目は日本語の文字列の出力です。文字列を囲む  `'` （シングルクォーテーション）や `"` （ダブルクォーテーション）は、半角ですので注意しましょう。
+
+[IMPORTANT]
+--
+テキストエディターの設定を調べて、Rubyのソースコードをファイルに保存するときの文字コードと改行コードを確認しましょう。
+Rubyのソースコードを書くときには、文字コードは UTF-8（BOMなし）、改行コードは `LF` だけという設定が推奨されています。
+--
+
+=== 作成したプログラムを確認する
+
+コマンドプロンプトを開いて、ワークスペースのディレクトリへ移動します（ <<cd_workspace_03>> ）。
+このような操作を「カレントディレクトリをrubybookに変更（移動）する」といいます。
+
+[[cd_workspace_03]]
+.【端末】ワークスペースへ移動する
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki>cd rubybook
+C:\Users\kuboaki\rubybook>
+----
+--
+
+
+移動できたら、 `dir` （MacやLinuxでは `ls` ）を使って、作成したファイルがこのディレクトリに保存できていることを確認します（ <<check_test01.rb_created>> ）。
+見つからないようなら、テキストエディターで保存したときに保存した場所を確認してみましょう。
+
+
+[[check_test01.rb_created]]
+.【端末】 `hello.rb` が保存できていることを確認する
+[example]
+--
+[source,consle]
+----
+C:\Users\kuboaki\rubybook>dir
+ ドライブ C のボリューム ラベルがありません。
+ ボリューム シリアル番号は 1808-7211 です
+
+ C:\Users\kuboaki\rubybook のディレクトリ
+
+2020/04/22  13:42    <DIR>          .
+2020/04/22  13:42    <DIR>          ..
+2020/04/22  13:42               149 hello.rb
+               1 個のファイル                 149 バイト
+               2 個のディレクトリ  207,987,175,424 バイトの空き領域
+----
+--
+
+これで、作成したプログラムファイルをワークスペースに保存できていることを確認できました。
+
+
+==== Rubyのプログラムを動かす
+
+作成したプログラムを実行してみましょう。
+コマンド名 `ruby` に続けて作成したプログラムのファイル名を書きます（ <<run_test01.rb>> ）。
+
+[[run_test01.rb]]
+.【端末】 `hello.rb` を実行する
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki\rubybook>ruby hello.rb
+----
+--
+
+実行すると、 <<output_test01.rb>> のような出力が得られます。
+
+[[output_test01.rb]]
+.【端末】 `hello.rb` を実行結果
+[example]
+--
+[source,console]
+----
+Hello World
+hello.rb
+これが日本語の表示
+----
+--
+
+どうでしょう。みなさんの実行結果は同じになりましたか。
+出力の2行目の表示が、作成したファイルの名前 `helllo.rb` になっていますね。これは、プログラム中の `+__FILE__+` という予約語が、実行時にこのファイルの名前に置き換えられた結果です。
+3行目の日本語も正常に表示されていますか。
+
+
+=== うまくいかないときの対処方法
+
+<<invalid_multibyte_char>> のようなメッセージが出力されたら、ファイルの文字コードが UTF-8 になっていないのが原因です。
+
+[[invalid_multibyte_char]]
+.【端末】ファイルの文字コードが UTF-8 でないとき
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki\rubybook>ruby test01.rb
+test01.rb:4: invalid multibyte char (UTF-8)
+test01.rb:4: invalid multibyte char (UTF-8)
+（略）
+test01.rb:4: invalid multibyte char (UTF-8)
+----
+--
+
+
+このような場合は、作成したプログラムファイルをもう一度テキストエディターで開いて、文字コードを UTF-8 になっているか確認してください。異なっていたら、 UTF-8 に変更して保存し直しましょう。
+
+
+<<unterminated_string>> のようなメッセージが出力されたら、文字列が半角のダブルクォーテーションで囲めていないのが原因です。
+
+[[unterminated_string]]
+.【端末】文字列が閉じていないと指摘されたとき
+[example]
+--
+[source,console]
+----
+C:\Users\kuboaki\rubybook>ruby test01.rb
+test01.rb:4: unterminated string meets end of file
+...れが日本語の表示’
+----
+--
+
+
+ちょっとわかりにくいですが、メッセージ中の「 `日本語の表示’` 」の部分、文字列の終わりに全角のシングルクォーテーションが出力されていますね。これを半角に直します。
+
+他にも、エラーメッセージが表示されて、期待通り動かないことがあるでしょう。
+入力したファイルをよく見直して、ささやかな違いも見逃さないよう、よく確かめてみてください。
+
+
+== まとめ
+
+
+この章では、テキストエディターを導入し、Rubyの利用環境を整備しました。
+
+文章を書くときに文字の入力や修正に手間取っていては、文章を書くのに手間取ってしまい、効率が上がらないでしょう。
+プログラミングも文章の作成と似ています。
+プログラムの入力や修正に手間取っていては、作るプログラムに集中できません。
+プログラムを書けるようになるには、テキストエディターの操作に慣れることは重要なことなのです。
+
+Rubyのインストールは、ちょっと手間がかかりましたね。
+ですが、いちどインストールしてしまえば、あとは使うだけです。
+ここからは、プログラムを作ることに集中できますね。
+

@@ -1,0 +1,357 @@
+:linkcss:
+:stylesdir: css
+:stylesheet: mystyle.css
+:twoinches: width='360'
+:full-width: width='100%'
+:three-quarters-width: width='75%'
+:two-thirds-width: width='66%'
+:half-width: width='50%'
+:half-size:
+:one-thirds-width: width='33%'
+:one-quarters-width: width='25%'
+:thumbnail: width='60'
+:imagesdir: images
+:sourcesdir: codes
+:icons: font
+:hide-uri-scheme!:
+:figure-caption: 図
+:example-caption: リスト
+:table-caption: 表
+:appendix-caption: 付録
+:xrefstyle: short
+:section-refsig:
+:chapter-refsig:
+
+NOTE: 下記文章中では、ワークスペースとして `Users\kuboaki\rubybok` といった場所を指定していますが、これは、みなさんがCloneしたリポジトリのディレクトリ名で読み替えてください。
+
+
+= Rubyをインストールする（macOS）
+
+Macには、MacOSとともにRubyが提供されていますので、そのまま使ってもよいでしょう。
+あるいは、他の仕事や演習でRubyを使っていて、別のRubyがインストールしてある場合もあるでしょう。
+
+そこで、まず、自分のMacで使えるRubyのバージョンを確認しましょう。
+
+== ターミナルを開く
+
+ターミナルを開きます（ <<terminal_prompt_00>> ）。
+ターミナルを起動するには、Finderで「アプリケーション」から探すか、Launchpadから「ターミナル」を入力するとできます。
+
+[[terminal_prompt_00]]
+.ターミナルのウィンドウ
+image::210207-0001_trimmed.jpg[{half-width}]
+
+ウィンドウに表示されている「 `~` （チルダ）」は、現在のディレクトリがホームディレクトリであることを示しています。
+ウィンドウの色やフォントは、みなさんのターミナルの設定で異なっているでしょう。
+また、表示されるプロンプトは、みなさんが使っているシェルの設定によって異なる場合があります。
+
+== Rubyを起動してみる
+
+最近のMacには、あらかじめ Rubyがインストールされています。
+システムにインストール去れているRubyを起動してみましょう。
+私が試している環境は、macOS Catalina（10.15.7）です。
+
+プログラム名の場合は小文字で `ruby` と入力します。その後ろに空白を入れて、 `--` （ハイフン2つ）に続けて `version` と入力します（ <<start_ruby_mac_03>> ）。
+
+
+[[start_run_mac_01]]
+.【端末】Rubyを起動する
+[example]
+--
+[source,console]
+----
+~ ls -l /usr/bin/ruby # <1>
+-r-xr-xr-x  1 root  wheel  36624  9 22 09:29 /usr/bin/ruby
+~ /usr/bin/ruby --version # <2>
+ruby 2.6.3p62 (2019-04-16 revision 67580) [universal.x86_64-darwin19]
+~ 
+----
+<1>  システムにあらかじめインストールされているRubyの所在を確認した。
+<2>  Rubyを `--version` オプションをつけて起動して、バージョン番号を表示した。
+--
+
+この表示をみると、バージョンが `ruby 2.6.3p62` のRubyがインストールされているのがわかります。
+
+インストールできていない場合には「 <<install_ruby_on_mac>> 」へ進みましょう。
+
+また、インストールされているバージョンが古すぎると、この本の期待した通りに演習できないことがあります。
+確認したバージョンが2.4やそれより前の場合は、この機会に新しいバージョンをインストールしましょう。
+
+
+これで、Rubyが使えるようになりました。
+「 <<make_simple_script_and_check>> 」へ進みましょう
+問題が見つかった場合には、これまでの手順を見直してみましょう。
+
+
+[[install_ruby_on_mac]]
+== 自分の PC に Ruby を追加する（Mac）
+
+MacにRubyをインストールする方法はいくつかありますが、2つだけ紹介しておきます。
+
+[WARNING]
+--
+HomeBrewやrbenvを使ってインストールする場合、インストール作業中にネットワーク上のサーバーからファイルをダウンロードします。
+また、ダウンロードするファイルも、ファイルサイズが大きくファイル数も多いです。
+必ず、長時間安定して接続できて、大量にダウンロードできるネットワークに接続した状態で作業しましょう。
+--
+
+
+=== Homebrewを使って追加する方法
+
+Homebrewは、パッケージの導入や保守をするパッケージマネージャと呼ばれるツールの一種です。
+Rubyだけではなく、多くのパッケージを提供しています。
+
+プロジェクトやディレクトリによらず、同じバージョンのRubyを使いたい人は、HomeBrewの提供するRubyのパッケージを使うとよいでしょう。
+そうではなく、プロジェクトやディレクトリによって異なるバージョンを切り替えて使いたい場合は、<<rbenv_01>> を参照してください。
+
+HomeBrewを導入するには、HomeBrewのWebサイトを訪問して、トップページの指示に従います。
+
+HomeBrewのWebサイト:: `https://brew.sh/index_ja`
+
+[TIP]
+--
+HomeBrewを使うには「Command Line Tools for Xcode」が必要です。
+最近のHomeBrewには、「Command Line Tools for Xcode」を導入するスクリプトが含まれているようですが、もしコンパイラのインストールで躓くようなら、個別にインストールしておくとHomeBrewのインストールがスムーズに進むでしょう。
+--
+
+
+HomeBrewが導入できたら、Rubyのパッケージをインストールします（ <<brew_install_ruby_01>> ）。
+
+[[brew_install_ruby_01]]
+.【端末】HomeBrewでRubyをインストールする
+[example]
+--
+[source,console]
+----
+~ brew install ruby
+----
+--
+
+特定のバージョンを指定してインストールする方法もあります（ <<brew_install_ruby_02>> ）。
+
+[[brew_install_ruby_02]]
+.【端末】HomeBrewでバージョンを指定してRubyをインストールする（2.7を指定した例）
+[example]
+--
+[source,console]
+----
+~ brew install ruby@2.7
+----
+--
+
+[[rbenv_01]]
+=== rbenvを使って追加する方法
+
+Rubyの複数のバージョンを、プロジェクトや作業用のディレクトリごとに切り替えて使いたいときは、 ((rbenv)) （ `https://github.com/rbenv/rbenv` ）を使います。
+
+この方法では、HomeBrewを使いますが、HomeBrewのRubyパッケージはインストールしません。
+代わりに、rbenv パッケージと ruby-build パッケージをインストールして、複数のRubyを切り替えて使えるしくみを用意します。
+
+まず。rbenv と ruby-build をインストールします（ <<rbenv_install_ruby_01>> ）。
+
+[[rbenv_install_ruby_01]]
+.【端末】HomeBrewを使って  `rbenv` と `ruby-build` をインストールする
+[example]
+--
+[source,console]
+----
+~ brew install rbenv ruby-install # <1>
+----
+<1> `brew` コマンドは、インストールしたい複数のパッケージを列挙すれば、まとめてインストールできる。
+--
+
+次に、rbenv を使うための初期処理を、ターミナルを起動するとき読み込まれるシェルスクリプトに追加します。
+あらかじめ、自分がターミナルで使っているシェルを確認しておきます（ <<check_termial_shell>> ）。
+
+[[check_termial_shell]]
+.【端末】ターミナル起動時に読み込まれるシェルの種類を調べる
+[example]
+--
+[source,console]
+----
+~ dscl . -read /Users/$USER UserShell
+UserShell: /usr/local/bin/zsh # <1>
+----
+<1> `zsh` を使っている場合の例
+--
+
+自分が使っているシェルに応じて、ターミナル起動時に読み込まれるシェルスクリプトを編集します。
+編集にはテキストエディターを使います。
+
+bashの場合は、 `~/.bashrc` に初期処理を追記します（ <<rbenv_install_ruby_02>> ）。
+
+[[rbenv_install_ruby_02]]
+.【BASH】 `~/.bashrc` の末尾に追記する
+[example]
+--
+[source,shell]
+----
+PATH="$HOME/.rbenv/bin:$PATH"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+----
+--
+
+zshの場合は、`~/.zshenv` と `~/.zshrc` に初期処理を追記します（ <<rbenv_install_ruby_03>> 、 <<rbenv_install_ruby_04>> ）。
+`~/.zshenv` がないときは、新しく作成します。
+
+[[rbenv_install_ruby_03]]
+.【ZSH】 `~/.zshenv` の末尾に環境変数を追記する
+[example]
+--
+[source,shell]
+----
+export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+----
+--
+
+[[rbenv_install_ruby_04]]
+.【ZSH】 `~/.zshrc` の末尾に追記する
+[example]
+--
+[source,shell]
+----
+eval "$(rbenv init - zsh)"
+----
+--
+
+bash、zsh ともに編集が済んだらターミナルを開き直します。
+わかる人は source コマンドを使ってもかまいません。
+
+利用可能な Rubyバージョンの一覧を表示してみましょう（ <<rbenv_install_ruby_05>> ）。
+
+[[rbenv_install_ruby_05]]
+.【端末】 利用可能なRubyバージョンの一覧を調べる
+[example]
+--
+[source,console]
+----
+~ rbenv install --list
+2.5.8
+2.6.6
+2.7.2
+3.0.0
+（略）
+----
+--
+
+ここから使いたいバージョンを選びます。
+この本の演習では、2.5 以降であれば使えます。
+調べた中から、比較的新しいバージョンを使うようにしましょう。
+
+ここでは、 `2.7.2` をインストールしてみます（ <<rbenv_install_ruby_06>> ）。
+少し時間がかかりますが、待ちましょう。
+
+[[rbenv_install_ruby_06]]
+.【端末】  `2.7.2` をインストールする
+[example]
+--
+[source,console]
+----
+~ rbenv install 2.7.2
+Downloading ruby-2.7.2.tar.bz2...
+-> https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.2.tar.bz2
+Installing ruby-2.7.2...
+ruby-build: using readline from homebrew
+
+（インストールが終わるまで待つ）
+
+Installed ruby-2.7.2 to /Users/kuboaki/.rbenv/versions/2.7.2
+----
+--
+
+インストールが終わったら、演習用に作成したディレクトリ（演習用のワークスペースと呼ぶことにしましたね）へ移動します（ <<cd_work_dir_01>>  ）。
+
+[IMPORTANT]
+--
+rbenvを使うと、利用するディレクトリに応じて Rubyのバージョンを選択できるようになります。
+rbenv を使ったRubyを使うときは、自分が使いたいディレクトリへ移動して、使用するバージョンを設定しましょう。
+--
+
+[[cd_work_dir_01]]
+.【端末】演習用ワークスペースへ移動する
+[example]
+--
+[source,console]
+----
+~ mkdir rubybook # <1>
+~ cd rubybook # <2>
+rubybook # <3>
+----
+<1> もしワークスペース用ディレクトリを作っていなかったら、作成する。
+<2> 作成したワークスペース用ディレクトリへ移動した。
+<3> この `rubybok` はプロンプト（入力促進記号）として表示しているディレクトリ名。
+--
+
+ワークスペースで使うRubyを `2.7.2` に設定します。
+リスト中、行頭の `rubybook` はプロンプトとして表示している現在のディレクトリ名なのに注意してください（ <<rbenv_install_ruby_07>> ）。
+
+[[rbenv_install_ruby_07]]
+.【端末】ワークスペースのRubyを  `2.7.2` に設定する
+[example]
+--
+[source,console]
+----
+rubybook rbenv local 2.7.2 # <1>
+rubybook rbenv versions # <2>
+  system
+  2.7.1
+* 2.7.2 (set by /Users/kuboaki/rubybook/.ruby-version) # <3>
+  3.0.0
+----
+<1> `local` コマンドで、現在のディレクトリで使うRubyのバージョンを設定している。
+<2> `versions` コマンドで rbenvでインストールしたRubyのバージョンを表示した。
+<3> `*` がついているのが、現在のディレクトリが設定しているRubyのバージョン。
+--
+
+
+== インストールできたか確認する
+
+Ruby を起動してみましょう。
+
+ターミナルを開きます。 <<start_ruby_mac_03>> のように、Rubyコマンドにバージョン番号表示のオプションを指定して起動します。
+
+[[start_ruby_mac_03]]
+.【端末】Rubyを起動する（ホームディレクトリ）
+[example]
+--
+[source,console]
+----
+~ ruby --version
+ruby 2.6.3p62 (2019-04-16 revision 67580) [x86_64-darwin19]
+----
+--
+
+この表示では、ホームディレクトリでは、バージョンが `2.6.4.p104` のRubyが使われていることががわかります。
+
+では、ワークスペースの場合はどうでしょう（ <<start_ruby_mac_04>> ）。
+
+[[start_ruby_mac_04]]
+.【端末】Rubyを起動する（ワークスペース）
+[example]
+--
+[source,console]
+----
+~ cd rubybook
+rubybooy ruby --version
+ruby 2.7.2p137 (2020-10-01 revision 5445e04352) [x86_64-darwin19]
+----
+--
+
+この表示では、ワークスペースでは、バージョンが `2.7.2p137` のRubyが使われるていることがわかります。
+
+もし、 <<start_ruby_mac_05>> のような表示になった場合には、Rubyのインストールで問題が起きているか、起動できない状態になっています。
+
+[[start_ruby_mac_05]]
+.【端末】Rubyが起動できなかったとき
+[example]
+--
+[source,console]
+----
+~ ruby --version
+zsh: command not found: ruby
+----
+--
+
+この場合は、インストールのどこかに問題があった可能性があります。
+インストールした手順を見直してみましょう。
+
